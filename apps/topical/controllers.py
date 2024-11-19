@@ -3,6 +3,11 @@ from .common import auth
 from .models import db, parse_post_content, get_user_email
 
 # Complete. 
+@action("index", method=["GET"])
+@action.uses("index.html", auth)
+def index():
+    return{}
+
 @action('create_post', method=['POST'])
 def create_post():
     if not auth.current_user:
