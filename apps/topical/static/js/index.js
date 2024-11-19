@@ -2,13 +2,13 @@
 
 // Complete. 
 
-const app = Vue.createapp({
+const app = Vue.createApp({
     data() {
         return{
             posts: [],
             tags: [],
             activeTags: [],
-            newContent: "",
+            newPostContent: "",
             user: null
         };
     },
@@ -26,12 +26,12 @@ const app = Vue.createapp({
 
     methods: {
         async fetchPosts() {
-            const response = await fetch("/get_posts");
+            const response = await fetch("/topical/get_posts");
             const data = await response.json();
             this.posts = data.posts;
         },
         async fetchTags() {
-            const response = await fetch("/get_tags");
+            const response = await fetch("/topical/get_tags");
             const data = await response.json();
             this.tags = data.tags;
         },
@@ -41,7 +41,7 @@ const app = Vue.createapp({
                 alert("Post must contain content");
                 return;
             }
-            const response = await fetch("/create_post", {
+            const response = await fetch("/topical/create_post", {
                 method: "POST",
                 headers: {"Content-Type": "application/json" },
                 body: JSON.stringify({ content: this.newPostContent})
@@ -58,7 +58,7 @@ const app = Vue.createapp({
         },
 
         async deletePost(postId) {
-            const response = await fetch('/delete_post/${postId}', {
+            const response = await fetch('/topical/delete_post/${postId}', {
                 method: "DELETE"
             });
             const data = await response.json();
@@ -88,12 +88,14 @@ const app = Vue.createapp({
 
 app.component("post-list", {
     props: ["posts"],
-    template: "#post-list-template"
+    template: "#post-list-template",
+    emits: ["on-delete"]
 });
 
 app.component("tag-list", {
     props: ["tags", "activeTags"],
-    template: "#tag-list-template"
+    template: "#tag-list-template",
+    emits: ["on-toggle"]
 });
 
 app.component("post-creation", {
