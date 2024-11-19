@@ -9,7 +9,7 @@ const app = Vue.createApp({
             tags: [],
             activeTags: [],
             newPostContent: "",
-            user: null
+            user: null,
         };
     },
 
@@ -64,7 +64,7 @@ const app = Vue.createApp({
                     this.fetchTags();
                 }
             }  catch (error) {
-                    console.error("Error creating post:", error)
+                    console.error("Error creating post:", error);
                 }
         },
 
