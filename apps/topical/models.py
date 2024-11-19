@@ -28,13 +28,13 @@ db.define_table(
 )
 
 db.define_table(
-    'tag'
+    'tag',
     Field('name', 'string', unique=True, requires=[IS_NOT_EMPTY(), IS_SLUG()]),
     format='%(name)s'
 )
 
 db.define_table(
-    'post_tag'
+    'post_tag',
     Field('post_id', 'reference post', requires=IS_IN_DB(db, 'post.id')),
     Field('tag_id', 'reference tag', requires=IS_IN_DB(db, 'tag.id'))
 )
