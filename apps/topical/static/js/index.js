@@ -49,20 +49,23 @@ const app = Vue.createApp({
                 alert("Post must contain content");
                 return;
             }
-            const response = await fetch("/topical/create_post", {
-                method: "POST",
-                headers: {"Content-Type": "application/json" },
-                body: JSON.stringify({ content: this.newPostContent})
-            });
-            const data = await response.json();
-            if (data.error) {
-                alert(data.error);
-            }
-            else {
-                this.newPostContent = "",
-                this.fetchPosts();
-                this.fetchTags();
-            }
+            try {
+                const response = await fetch("/topical/create_post", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json" },
+                    body: JSON.stringify({ content: this.newPostContent })
+                });
+                const data = await response.json();
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    this.newPostContent = "",
+                    this.fetchPosts();
+                    this.fetchTags();
+                }
+            }  catch (error) {
+                    console.error("Error creating post:", error)
+                }
         },
 
         async deletePost(postId) {
