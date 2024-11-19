@@ -59,7 +59,7 @@ const app = Vue.createApp({
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    this.newPostContent = "",
+                    this.newPostContent = "";
                     this.fetchPosts();
                     this.fetchTags();
                 }
@@ -94,7 +94,7 @@ const app = Vue.createApp({
     mounted() {
         this.fetchPosts();
         this.fetchTags();
-    }
+    },
 });
 
 app.component("post-list", {
