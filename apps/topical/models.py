@@ -39,7 +39,7 @@ db.define_table(
     Field('tag_id', 'reference tag', requires=IS_IN_DB(db, 'tag.id'))
 )
 
-def parse_tags():
+def parse_tags(post_content):
     return re.findall(r'#(\w+)', post_content)
 
 def on_post_insert(fields):
