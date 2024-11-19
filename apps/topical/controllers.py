@@ -8,7 +8,7 @@ from .models import db, parse_post_content, get_user_email
 def index():
     return{}
 
-@action('topical/create_post', method=['POST'])
+@action('create_post', method=['POST'])
 def create_post():
     if not auth.current_user:
         abort(403, "You must be logged in in order to make a post")
@@ -19,12 +19,12 @@ def create_post():
     post_id= db.post.insert(content=content)
     return {"message": "Post created", "post_id": post_id}
 
-@action('topical/get_posts', method=['GET'])
+@action('get_posts', method=['GET'])
 def get_posts():
     posts= db(db.post).select(orderby=~db.post.created_at).as_list()
     return {"posts": posts}
 
-@action('topical/delete_post/<post_id>', method=['DELETE'])
+@action('delete_post/<post_id>', method=['DELETE'])
 def delete_post(post_id):
     if not auth.current_user:
         abort(403, "You must be logged in in order to make a post")
@@ -37,12 +37,12 @@ def delete_post(post_id):
     db(db.post_id == post_id).delete()
     return{"message": "Post deleted successfully"}
 
-@action('topical/get_tags', method=['GET'])
+@action('get_tags', method=['GET'])
 def get_tags():
     tags=db(db.tag).select().as_list()
     return {"tags": tags}
 
-@action('topical/toggle_tag', method=['POST'])
+@action('toggle_tag', method=['POST'])
 def toggle_tag():
     tag_name= request.json.get('tag_name')
     if not tag_name:
@@ -51,7 +51,7 @@ def toggle_tag():
     if not tag:
         return {"error": "Tag not found"}
     
-@action('topical/filter_posts', method=['POST'])
+@action('filter_posts', method=['POST'])
 def filter_posts():
     tags= request.json.get('tags', [])
     if not tags:

@@ -27,10 +27,18 @@ const app = Vue.createApp({
     methods: {
         async fetchPosts() {
             const response = await fetch("/topical/get_posts");
+            if (!response.ok) {
+                console.error("Failed to fetch posts");
+                return;
+            }
             const data = await response.json();
             this.posts = data.posts;
         },
         async fetchTags() {
+            if (!response.ok) {
+                console.error("Failed to fetch tags");
+                return;
+            }
             const response = await fetch("/topical/get_tags");
             const data = await response.json();
             this.tags = data.tags;
