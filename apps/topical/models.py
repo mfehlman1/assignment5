@@ -42,7 +42,7 @@ db.define_table(
 def parse_post_content(post_content):
     return re.findall(r"#(\w+)", post_content)
 
-def on_post_insert(fields):
+def on_post_insert(fields, id):
     tags= parse_post_content(fields["content"])
     tag_ids= []
 
