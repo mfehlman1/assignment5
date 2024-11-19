@@ -9,6 +9,7 @@ def index():
     return{}
 
 @action('create_post', method=['POST'])
+@action.uses(auth)
 def create_post():
     if not auth.current_user:
         abort(403, "You must be logged in in order to make a post")
@@ -25,6 +26,7 @@ def get_posts():
     return {"posts": posts}
 
 @action('delete_post/<post_id>', method=['DELETE'])
+@action.uses(auth)
 def delete_post(post_id):
     if not auth.current_user:
         abort(403, "You must be logged in in order to make a post")
