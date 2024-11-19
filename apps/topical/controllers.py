@@ -51,4 +51,4 @@ def filter_posts():
         return {"error": "No tags provided"}
     query = (db.post.id ==db.post_tag.post_id) & (db.tag.id == db.post_tag.tag_id) & (db.tag.name.belongs(tags))
     posts = db(query).select(db.post.ALL, orderby=~db.post.created_at).as_list()
-    return ("posts": posts)
+    return {"posts": posts}
