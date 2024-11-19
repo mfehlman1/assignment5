@@ -14,7 +14,7 @@ def get_user():
     return auth.current_user.get('id') if auth.current_user else None
 
 def get_time():
-    return datetime.now(timezone.utc)
+    return datetime.datetime.now(datetime.timezone.utc)
 
 # Complete. 
 
@@ -39,11 +39,11 @@ db.define_table(
     Field('tag_id', 'reference tag', requires=IS_IN_DB(db, 'tag.id'))
 )
 
-def parse_tags(post_content):
+def parse_post_content(post_content):
     return re.findall(r'#(\w+)', post_content)
 
 def on_post_insert(fields):
-    tags= parse_tags(fields['content'])
+    tags= parse_post_content(fields['content'])
     tag_ids= []
 
     for tag_name in tags:
