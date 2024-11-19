@@ -1,11 +1,12 @@
-from py4web import action, request, URL
+from py4web import action, request, URL, abort
 from .common import auth
 from .models import db, parse_post_content, get_user_email
 
 # Complete. 
 @action('create_post', method=['POST'])
-@auth.requires_login()
 def create_post():
+    if not auth.current_user:
+        abort(403, "You must be logged in in order to make a post")
     content = request.json.get('content')
     if not content:
         return {"Must have post content"}
@@ -19,8 +20,9 @@ def get_posts():
     return {"posts": posts}
 
 @action('delete_post/<post_id>', method=['DELETE'])
-@auth.requires_login()
 def delete_post(post_id):
+    if not auth.current_user:
+        abort(403, "You must be logged in in order to make a post")
     post = db.post(post_id)
     if not post:
         return {"error": "Couldn't find post"}
