@@ -58,7 +58,7 @@ const app = Vue.createApp({
         },
 
         async deletePost(postId) {
-            const response = await fetch('/topical/delete_post/${postId}', {
+            const response = await fetch(`/topical/delete_post/${postId}`, {
                 method: "DELETE"
             });
             const data = await response.json();
