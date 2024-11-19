@@ -40,14 +40,14 @@ db.define_table(
 )
 
 def parse_post_content(post_content):
-    return re.findall(r'#(\w+)', post_content)
+    return re.findall(r"#(\w+)", post_content)
 
 def on_post_insert(fields):
-    tags= parse_post_content(fields['content'])
+    tags= parse_post_content(fields["content"])
     tag_ids= []
 
     for tag_name in tags:
-        tag, created= db.tag.get_or_insert(name=tag_name.lower())
+        tag, _ = db.tag.get_or_insert(name=tag_name.lower())
         tag_ids.append(tag.id)
     
     for tag_id in tag_ids:
