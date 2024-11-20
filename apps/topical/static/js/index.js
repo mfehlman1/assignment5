@@ -9,7 +9,7 @@ const app = Vue.createApp({
             tags: [],
             activeTags: [],
             newPostContent: "",
-            user: null
+            user: userId
         };
     },
 
