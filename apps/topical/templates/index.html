@@ -1,11 +1,12 @@
 [[extend 'layout.html']]
 
 <div class="section" id="app">
-<!-- Complete.  -->
+<!-- Complete.  --> 
 <div class="columns">
   <div class="column is-three-quarters">
     <div>
       <div class="box">
+        <!--Box for creating a new post-->
         <textarea
           id="post-input"
           v-model="newPostContent"
@@ -20,6 +21,7 @@
       </div>
     </div>
     <div>
+        <!--Class for handling content creation-->
       <div v-for="post in filteredPosts" :key="post.id" class="post" class="box" style="margin-top: 10px;">
         <p class="post-content"style="margin-bottom: 5px;">{{ post.content }}</p>
         <div class="tags">
@@ -27,6 +29,7 @@
             {{ tag.name }}
           </span>
         </div>
+          <!--Delete button functionality-->
         <button
           v-if="user !== null && post.user_id === user"
           class="delete-button"
@@ -38,6 +41,7 @@
     </div>
   </div>
 
+    <!--Box for handling the tag functionality-->
   <div class="column is-one-quarter">
     <div class="box">
       <h3 class="title is-4">Tags</h3>

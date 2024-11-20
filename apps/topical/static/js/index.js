@@ -1,6 +1,6 @@
 "use strict";
 
-// Complete. 
+// Complete.  
 
 const app = Vue.createApp({
     data() {
@@ -13,6 +13,7 @@ const app = Vue.createApp({
         };
     },
 
+//function for handling the filtering computation based on active tags
     computed: {
         filteredPosts() {
             if (this.activeTags.length === 0) {
@@ -25,7 +26,9 @@ const app = Vue.createApp({
         }
     },
 
+
     methods: {
+//fetches the user info from the backend
         async fetchUserInfo() {
             try {
                 const response = await fetch("/topical/user_info");
@@ -42,6 +45,7 @@ const app = Vue.createApp({
             }
         },
 
+//fetchs posts from the backend
         async fetchPosts() {
             const response = await fetch("/topical/get_posts");
             if (!response.ok) {
@@ -55,6 +59,8 @@ const app = Vue.createApp({
             }));
             console.log("Fetched Posts:", this.posts);
         },
+
+//fetches tags from the backend
         async fetchTags() {
             const response = await fetch("/topical/get_tags");
             if (!response.ok) {
@@ -65,6 +71,7 @@ const app = Vue.createApp({
             this.tags = data.tags;
         },
 
+//creates a new post by placing "content" in newPostContent
         async createPost() {
             if (!this.newPostContent.trim()) {
                 alert("Post must contain content");
@@ -89,6 +96,8 @@ const app = Vue.createApp({
                 }
         },
 
+//deletes a post based on the user post Id
+
         async deletePost(postId) {
             try {
                 const response = await fetch(`/topical/delete_post/${postId}`, {
@@ -109,6 +118,8 @@ const app = Vue.createApp({
             
         },
 
+
+//toggles the selection of a tag based on the current active tags
         toggleTag(tagName) {
             if (this.activeTags.includes(tagName)) {
                 this.activeTags = this.activeTags.filter(tag => tag !== tagName);
@@ -119,6 +130,8 @@ const app = Vue.createApp({
             console.log("Updated Active Tags:", this.activeTags);
         }
     },
+
+    //fetches the initial data
     mounted() {
         this.fetchUserInfo();
         this.fetchPosts();
@@ -126,18 +139,21 @@ const app = Vue.createApp({
     },
 });
 
+//component for displaying the list of posts
 app.component("post-list", {
     props: ["posts"],
     template: "#post-list-template",
     emits: ["on-delete"]
 });
 
+//component for displaying the list of tags
 app.component("tag-list", {
     props: ["tags", "activeTags"],
     template: "#tag-list-template",
     emits: ["on-toggle"]
 });
 
+//component for handling the creation of a post
 app.component("post-creation", {
     props:["newPostContent"],
     template: "#post-creation-template",

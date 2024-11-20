@@ -3,16 +3,19 @@ from .common import auth
 from .models import db, parse_post_content, get_user_email
 
 # Complete. 
+#renders the main index page
 @action("index", method=["GET"])
 @action.uses("index.html", auth)
 def index():
     return {}
 
+#function for providing info about the current user
 @action('user_info', method=['GET'])    
 @action.uses(auth)
 def user_info():
     return {"user_id": auth.current_user.get("id") if auth.current_user else None}
 
+#function for creating a post
 @action('create_post', method=['POST'])
 @action.uses(auth)
 def create_post():
@@ -25,6 +28,7 @@ def create_post():
         post_id= db.post.insert(content=content)
         return {"message": "Post created", "post_id": post_id}
 
+#fetches all posts along with their tags
 @action('get_posts', method=['GET'])
 def get_posts():
     posts= db(db.post).select(orderby=~db.post.created_at).as_list()
@@ -35,6 +39,7 @@ def get_posts():
         post['tags'] = [tag['name'] for tag in tags]
     return {"posts": posts}
 
+#function for deleting the post based on user input
 @action('delete_post/<post_id>', method=['DELETE'])
 @action.uses(auth)
 def delete_post(post_id):
@@ -56,12 +61,14 @@ def delete_post(post_id):
         traceback.print_exc()  # Log the traceback
         return {"error": str(e)}
 
+#function for fetching all active tags
 @action('get_tags', method=['GET'])
 @action.uses(db)
 def get_tags():
     active_tags = db(db.tag.id.belongs(db(db.post_tag.tag_id > 0)._select(db.post_tag.tag_id))).select(db.tag.ALL)
     return dict(tags=[{"id": tag.id, "name": tag.name} for tag in active_tags])
 
+#function for toggling the state of the tag(demonstrating its association with its related post)
 @action('toggle_tag', method=['POST'])
 def toggle_tag():
     tag_name= request.json.get('tag_name')
@@ -71,6 +78,7 @@ def toggle_tag():
     if not tag:
         return {"error": "Tag not found"}
     
+#function for filtering posts based on their associated tags
 @action('filter_posts', method=['POST'])
 def filter_posts():
     tags= request.json.get('tags', [])
