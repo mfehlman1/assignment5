@@ -36,7 +36,11 @@ const app = Vue.createApp({
                 return;
             }
             const data = await response.json();
-            this.posts = data.posts;
+            this.posts = data.posts.map(post => ({
+                ...post,
+                tags: post.tags || [] 
+            }));
+            console.log("Fetched Posts:", this.posts);
         },
         async fetchTags() {
             const response = await fetch("/topical/get_tags");
