@@ -23,7 +23,7 @@
           </span>
         </div>
         <button
-          v-if="post.user_id === user"
+          v-if="String(post.user_id) === String(user)"
           class="delete-button"
           @click="deletePost(post.id)"
         >
