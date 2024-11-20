@@ -26,6 +26,22 @@ const app = Vue.createApp({
     },
 
     methods: {
+        async fetchUserInfo() {
+            try {
+                const response = await fetch("/topical/user_info");
+                if (!response.ok) {
+                    console.error("Failed to fetch user info");
+                    return;
+                }
+                const data = await response.json();
+                this.user = data.user_id;
+                console.log("User-Id: ", this.user);
+            }
+            catch (error) {
+                console.error("Error fetching user info:", error)
+            }
+        }
+
         async fetchPosts() {
             const response = await fetch("/topical/get_posts");
             if (!response.ok) {
@@ -104,6 +120,7 @@ const app = Vue.createApp({
         }
     },
     mounted() {
+        this.fetchUserInfo();
         this.fetchPosts();
         this.fetchTags();
     },

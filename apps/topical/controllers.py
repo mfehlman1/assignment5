@@ -8,6 +8,11 @@ from .models import db, parse_post_content, get_user_email
 def index():
     return {}
 
+@action('user_info', method=['GET'])    
+@action.uses(auth)
+def user_info():
+    return {"user_id": auth.current_user.get("id") if auth.current_user else None}
+
 @action('create_post', method=['POST'])
 @action.uses(auth)
 def create_post():
