@@ -11,7 +11,6 @@ def index():
 @action('create_post', method=['POST'])
 @action.uses(auth)
 def create_post():
-    try:
         if not auth.current_user:
             abort(403, "You must be logged in in order to make a post")
         content = request.json.get('content')
@@ -19,11 +18,7 @@ def create_post():
             return {"Must have post content"}
         
         post_id= db.post.insert(content=content)
-        print(f"Post created with ID: {post_id}")
         return {"message": "Post created", "post_id": post_id}
-    except Exception as e:
-        print(f"Error creating post: {e}")
-        raise
 
 @action('get_posts', method=['GET'])
 def get_posts():

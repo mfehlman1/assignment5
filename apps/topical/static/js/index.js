@@ -93,9 +93,9 @@ const app = Vue.createApp({
         }
     },
     mounted() {
+        this.user = Number(userId)
         this.fetchPosts();
         this.fetchTags();
-        console.log("Logged-in User ID:", this.user);
     },
 });
 
