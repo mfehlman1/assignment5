@@ -23,6 +23,11 @@ def create_post():
 @action('get_posts', method=['GET'])
 def get_posts():
     posts= db(db.post).select(orderby=~db.post.created_at).as_list()
+    for post in posts:
+        tags = db(
+            (db.post_tag.post_id == post['id']) & (db.post_tag.tag_id == db.tag.id)
+        ).select(db.tag.name).as_list()
+        post['tags'] = [tag['name'] for tag in tags]
     return {"posts": posts}
 
 @action('delete_post/<post_id>', method=['DELETE'])

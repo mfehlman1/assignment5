@@ -19,12 +19,11 @@ const app = Vue.createApp({
                 return this.posts;
             }
             console.log("Active Tags:", this.activeTags);
-            this.posts.forEach(post => {
-                console.log("Post Tags:", post.tags);
+            return this.posts.filter(post => {
+                const postTags = post.tags || []; 
+                console.log("Post Tags:", postTags);
+                return postTags.some(tag => this.activeTags.includes(tag));
             });
-            return this.posts.filter(post =>
-                post.tags.some(tag => this.activeTags.includes(tag.name))
-            );
         }
     },
 
