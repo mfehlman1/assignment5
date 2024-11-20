@@ -32,16 +32,17 @@
   </div>
 
   <div class="column is-one-quarter">
-    <div>
-      <button
-        v-for="tag in tags"
-        :key="tag.id"
-        :class="{ active: activeTags.includes(tag.name) }"
-        class="tag"
-        @click="toggleTag(tag.name)"
+    <div class="box">
+      <h3 class="title is-4">Tags</h3>
+        <button
+          v-for="tag in tags"
+          :key="tag.id"
+          :class="{ active: activeTags.includes(tag.name) }"
+          class="tag"
+          @click="toggleTag(tag.name)"
         >
-          {{ tag.name }}
-      </button>
+            {{ tag.name }}
+        </button>
     </div>
   </div>
 </div>
