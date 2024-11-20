@@ -18,7 +18,11 @@ const app = Vue.createApp({
             if (this.activeTags.length === 0) {
                 return this.posts;
             }
-            return this.posts.filter(post => 
+            console.log("Active Tags:", this.activeTags);
+            this.posts.forEach(post => {
+                console.log("Post Tags:", post.tags);
+            });
+            return this.posts.filter(post =>
                 post.tags.some(tag => this.activeTags.includes(tag.name))
             );
         }
@@ -89,16 +93,10 @@ const app = Vue.createApp({
             else {
                 this.activeTags.push(tagName);
             }
+            console.log("Updated Active Tags:", this.activeTags);
         }
     },
     mounted() {
-        if (typeof userId === "undefined" || userId === null) {
-            console.error("userId is not defined or null!");
-            this.user = null; 
-        } else {
-            this.user = Number(userId); 
-        }
-        console.log("Initialized user ID in Vue:", this.user);
         this.fetchPosts();
         this.fetchTags();
     },
