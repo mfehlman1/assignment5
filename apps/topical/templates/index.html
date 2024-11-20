@@ -15,6 +15,9 @@
     <div>
       <div v-for="post in filteredPosts" :key="post.id" class="post">
         <p class="post-content">{{ post.content }}</p>
+        <p>Post User ID: {{ post.user_id }} (Type: {{ typeof post.user_id }})</p>
+        <p>Logged-in User ID: {{ user }} (Type: {{ typeof user }})</p>
+        <p>Comparison: {{ post.user_id === user }}</p> 
         <div class="tags">
           <span v-for="tag in post.tags" :key="tag.id" class="tag">
             {{ tag.name }}
