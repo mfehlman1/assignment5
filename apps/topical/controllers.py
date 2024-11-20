@@ -33,16 +33,23 @@ def get_posts():
 @action('delete_post/<post_id>', method=['DELETE'])
 @action.uses(auth)
 def delete_post(post_id):
-    if not auth.current_user:
-        abort(403, "You must be logged in in order to make a post")
-    post = db.post(post_id)
-    if not post:
-        return {"error": "Couldn't find post"}
-    if post.user_id != auth.current_user.get("id"):
-        return{"error": "Not authorized"}
-    
-    db(db.post.id == post_id).delete()
-    return{"message": "Post deleted successfully"}
+    try:
+        post_id = int(post_id)
+        post = db.post(post_id)
+        if not auth.current_user:
+            abort(403, "You must be logged in in order to make a post")
+        post = db.post(post_id)
+        if not post:
+            return {"error": "Couldn't find post"}
+        if post.user_id != auth.current_user.get("id"):
+            return{"error": "Not authorized"}
+        
+        db(db.post.id == post_id).delete()
+        return{"message": "Post deleted successfully"}
+    except Exception as e:
+        import traceback
+        traceback.print_exc()  # Log the traceback
+        return {"error": str(e)}
 
 @action('get_tags', method=['GET'])
 def get_tags():

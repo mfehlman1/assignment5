@@ -58,6 +58,6 @@ def on_post_insert(fields, id):
         db.post_tag.insert(post_id=id, tag_id=tag_id)
             
 db.post._after_insert.append(on_post_insert)
-db.post._after_delete.append(lambda row: db(db.post_tag.post_id == row.id).delete())
+db.post._after_delete.append(lambda row: db(db.post_tag.post_id == row.get('id')).delete())
 
 db.commit()
