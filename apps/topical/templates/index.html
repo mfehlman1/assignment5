@@ -5,12 +5,19 @@
 <div class="columns">
   <div class="column is-three-quarters">
     <div>
-      <textarea
-        id="post-input"
-        v-model="newPostContent"
-        placeholder="Write your post here... "
-      ></textarea>
-      <button id="post-button" @click="createPost">Create Post</button>
+      <div class="box">
+        <textarea
+          id="post-input"
+          v-model="newPostContent"
+          placeholder="Write your post here... "
+          class="textarea"
+          style="width: 100%; height: 150px; font-size: 18px;"
+        ></textarea>
+        <button id="post-button" 
+        class="button is-primary is-fullwidth"
+        style="margin-top: 15x;"
+        @click="createPost">Create Post</button>
+      </div>
     </div>
     <div>
       <div v-for="post in filteredPosts" :key="post.id" class="post">
