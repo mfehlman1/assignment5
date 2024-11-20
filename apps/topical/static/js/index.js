@@ -9,7 +9,7 @@ const app = Vue.createApp({
             tags: [],
             activeTags: [],
             newPostContent: "",
-            user: userId
+            user: typeof userId !== "undefined" ? Number(userId) : null
         };
     },
 
@@ -92,9 +92,13 @@ const app = Vue.createApp({
         }
     },
     mounted() {
-        console.log("Raw userId from backend:", userId); 
-        this.user = Number(userId)
-        console.log("Initialized user ID in Vue:", this.user); 
+        if (typeof userId === "undefined" || userId === null) {
+            console.error("userId is not defined or null!");
+            this.user = null; 
+        } else {
+            this.user = Number(userId); 
+        }
+        console.log("Initialized user ID in Vue:", this.user);
         this.fetchPosts();
         this.fetchTags();
     },
