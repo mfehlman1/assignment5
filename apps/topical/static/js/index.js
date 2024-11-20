@@ -32,6 +32,7 @@ const app = Vue.createApp({
                 return;
             }
             const data = await response.json();
+            console.log("Posts:", data.posts);
             this.posts = data.posts;
         },
         async fetchTags() {
@@ -94,6 +95,7 @@ const app = Vue.createApp({
     mounted() {
         this.fetchPosts();
         this.fetchTags();
+        console.log("Logged-in User ID:", this.user);
     },
 });
 
