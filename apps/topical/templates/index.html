@@ -21,6 +21,7 @@
           </span>
         </div>
         <button
+          v-if="post.user_id === user"
           class="delete-button"
           @click="deletePost(post.id)"
         >
