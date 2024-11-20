@@ -40,7 +40,7 @@ const app = Vue.createApp({
             catch (error) {
                 console.error("Error fetching user info:", error)
             }
-        }
+        },
 
         async fetchPosts() {
             const response = await fetch("/topical/get_posts");
