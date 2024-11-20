@@ -60,7 +60,9 @@ def on_post_insert(fields, id):
 db.post._after_insert.append(on_post_insert)
 def remove_tags(row):
         db(db.post_tag.post_id == getattr(row, 'id', None)).delete()
-        db(~db.tag.id.belongs(db(db.post_tag.tag_id > 0)._select(db.post_tag.tag_id))).delete()
+        unused_tags = db(~db.tag.id.belongs(db(db.post_tag.tag_id)._select(db.post_tag.tag_id))).select()
+        for tag in unused_tags:
+            db(db.tag.id == tag.id).delete()
 db.post._after_delete.append(remove_tags)
 
 db.commit()
