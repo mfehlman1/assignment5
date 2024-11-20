@@ -57,9 +57,10 @@ def delete_post(post_id):
         return {"error": str(e)}
 
 @action('get_tags', method=['GET'])
+@action.uses(db)
 def get_tags():
-    tags=db(db.tag).select().as_list()
-    return {"tags": tags}
+    active_tags = db(db.tag.id.belongs(db(db.post_tag.tag_id > 0)._select(db.post_tag.tag_id))).select(db.tag.ALL)
+    return dict(tags=[tag.name for tag in active_tags])
 
 @action('toggle_tag', method=['POST'])
 def toggle_tag():
