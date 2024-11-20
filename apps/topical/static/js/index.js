@@ -18,10 +18,8 @@ const app = Vue.createApp({
             if (this.activeTags.length === 0) {
                 return this.posts;
             }
-            console.log("Active Tags:", this.activeTags);
             return this.posts.filter(post => {
                 const postTags = post.tags || []; 
-                console.log("Post Tags:", postTags);
                 return postTags.some(tag => this.activeTags.includes(tag));
             });
         }
@@ -76,17 +74,23 @@ const app = Vue.createApp({
         },
 
         async deletePost(postId) {
-            const response = await fetch(`/topical/delete_post/${postId}`, {
-                method: "DELETE"
-            });
-            const data = await response.json();
-            if (data.error) {
-                alert(data.error);
+            try {
+                const response = await fetch(`/topical/delete_post/${postId}`, {
+                    method: "DELETE"
+                });
+                const data = await response.json();
+                if (data.error) {
+                    alert(data.error);
+                }
+                else {
+                    this.fetchPosts();
+                    this.fetchTags();
+                }
+            } 
+            catch(error) {
+                console.error("Error deleting post: ", error);
             }
-            else {
-                this.fetchPosts();
-                this.fetchTags();
-            }
+            
         },
 
         toggleTag(tagName) {

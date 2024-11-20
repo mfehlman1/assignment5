@@ -41,7 +41,7 @@ def delete_post(post_id):
     if post.user_id != auth.current_user.get("id"):
         return{"error": "Not authorized"}
     
-    db(db.post_id == post_id).delete()
+    db(db.post.id == post_id).delete()
     return{"message": "Post deleted successfully"}
 
 @action('get_tags', method=['GET'])
