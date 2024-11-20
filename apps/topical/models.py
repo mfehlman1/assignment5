@@ -47,7 +47,7 @@ def on_post_insert(fields, id):
     tag_ids= []
 
     for tag_name in tags:
-        tag = db(db.tag_name == tag_name.lower()).select().first()
+        tag = db(db.tag.name == tag_name.lower()).select().first()
         if not tag:
             tag_id = db.tag.insert(name=tag_name.lower())
         else:
