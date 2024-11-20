@@ -55,7 +55,7 @@ def on_post_insert(fields, id):
         tag_ids.append(tag_id)
     
     for tag_id in tag_ids:
-        db.post_tag.insert(post_id=fields["id"], tag_id=tag_id)
+        db.post_tag.insert(post_id=id, tag_id=tag_id)
             
 db.post._after_insert.append(on_post_insert)
 db.post._after_delete.append(lambda row: db(db.post_tag.post_id == row.id).delete())
