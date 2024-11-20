@@ -92,7 +92,9 @@ const app = Vue.createApp({
         }
     },
     mounted() {
+        console.log("Raw userId from backend:", userId); 
         this.user = Number(userId)
+        console.log("Initialized user ID in Vue:", this.user); 
         this.fetchPosts();
         this.fetchTags();
     },
