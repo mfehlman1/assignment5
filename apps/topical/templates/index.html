@@ -24,7 +24,7 @@
           </span>
         </div>
         <button
-          v-if="(post.user_id) === (user)"
+          v-if="user !== null && post.user_id === user"
           class="delete-button"
           @click="deletePost(post.id)"
         >
@@ -53,7 +53,7 @@
 [[block page_scripts]]
 <script>
   // Complete.
-  const userId = {{=user_id}};
+  const userId = {{=user_id if user_id is not None else 'null'}};
 </script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
