@@ -6,9 +6,9 @@ from .models import db, parse_post_content, get_user_email
 @action("index", method=["GET"])
 @action.uses("index.html", auth)
 def index():
-    print("Logged-in User ID (Backend):", auth.current_user.get("id") if auth.current_user else None)
-    return {"user_id": auth.current_user.get("id") if auth.current_user else None}
-    #return{"user_id": auth.current_user.get("id") if auth.current_user else None}
+    user_id = auth.current_user.get("id") if auth.current_user else None
+    print("Backend Debug: Logged-in User ID:", user_id)  
+    return {"user_id": user_id}
 
 @action('create_post', method=['POST'])
 @action.uses(auth)
