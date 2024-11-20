@@ -2,7 +2,6 @@
 
 <div class="section" id="app">
 <!-- Complete.  -->
-<p>Debug User ID from Backend: {{=user_id if user_id is not None else "No user logged in"}}</p>
 <div class="columns">
   <div class="column is-three-quarters">
     <div>
@@ -54,7 +53,7 @@
 [[block page_scripts]]
 <script>
   // Complete.
-  const userId = {{=user_id if user_id is not None else 'null'}};
+  const userId = {{=user_id if user_id is not None else "'null'"}};
 </script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
