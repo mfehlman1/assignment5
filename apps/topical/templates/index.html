@@ -2,7 +2,7 @@
 
 <div class="section" id="app">
 <!-- Complete.  -->
-<p>Debug User ID from Backend: {{=user_id}}</p>
+<p>Debug User ID from Backend: {{=user_id if user_id is not None else "No user logged in"}}</p>
 <div class="columns">
   <div class="column is-three-quarters">
     <div>
