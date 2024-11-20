@@ -52,7 +52,7 @@ def on_post_insert(fields, id):
             tag_id = db.tag.insert(name=tag_name.lower())
         else:
             tag_id = tag.id
-        tag_ids.append(tag.id)
+        tag_ids.append(tag_id)
     
     for tag_id in tag_ids:
         db.post_tag.insert(post_id=fields["id"], tag_id=tag_id)
